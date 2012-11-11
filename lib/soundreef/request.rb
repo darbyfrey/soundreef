@@ -20,6 +20,9 @@ class Soundreef
     end
 
     def response
+      raise Exception.new('Missing Private Key') if !Soundreef.config.private_key
+      raise Exception.new('Missing Public Key') if !Soundreef.config.public_key
+
       http    = Net::HTTP.new(uri.host)
       request = Net::HTTP::Post.new(uri.request_uri)
       
@@ -27,7 +30,7 @@ class Soundreef
       request.add_field('x-signature', signature)
       request.set_form_data(@params)
       
-      http.request(request)
+      Hashie::Mash.new(JSON.parse(http.request(request).response.body))
     end
   end
 end

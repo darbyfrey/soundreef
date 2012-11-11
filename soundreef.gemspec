@@ -15,5 +15,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Soundreef::VERSION
 
+  gem.add_dependency('hashie', '1.2.0')
   gem.add_development_dependency "rspec"
 end
