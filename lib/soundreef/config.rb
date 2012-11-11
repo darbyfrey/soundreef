@@ -13,5 +13,9 @@ class Soundreef
 end
 
 class Soundreef::Configuration
-  attr_accessor :public_key, :private_key
+  attr_accessor :public_key, :private_key, :host
+
+  def host
+    @host || 'api.soundreef.com'
+  end
 end

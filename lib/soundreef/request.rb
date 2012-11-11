@@ -1,7 +1,10 @@
 class Soundreef
   class Request
-    def initialize(params = {})
-      @params = params
+    attr_accessor :params
+
+    def initialize(endpoint, params = {})
+      @endpoint = endpoint
+      @params = params.merge({:timestamp => Time.now.to_i})
     end
 
     def request_string
@@ -9,17 +12,20 @@ class Soundreef
     end
 
     def signature
-      OpenSSL::HMAC.hexdigest('sha256', Soundreef.config.private_key, request_string.to_s)
+      OpenSSL::HMAC.hexdigest('sha256', Soundreef.config.private_key, request_string)
+    end
+
+    def uri
+      URI::HTTP.build({:host => Soundreef.config.host, :path => @endpoint})
     end
 
     def response
-      uri     = URI.parse("http://api.soundreef.com/song/list")
-      http    = Net::HTTP.new(uri.host, uri.port)
+      http    = Net::HTTP.new(uri.host)
       request = Net::HTTP::Post.new(uri.request_uri)
       
       request.add_field('x-publickey', Soundreef.config.public_key)
       request.add_field('x-signature', signature)
-      request.set_form_data({'timestamp' => Time.now.utc.to_i})
+      request.set_form_data(@params)
       
       http.request(request)
     end
