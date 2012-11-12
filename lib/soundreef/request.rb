@@ -5,6 +5,7 @@ class Soundreef
     def initialize(endpoint, params = {})
       @endpoint = endpoint
       @params = params.merge({:timestamp => Time.now.to_i})
+      stringify_param_keys!
     end
 
     def request_string
@@ -17,6 +18,10 @@ class Soundreef
 
     def uri
       URI::HTTP.build({:host => Soundreef.config.host, :path => @endpoint})
+    end
+
+    def stringify_param_keys!
+      @params = Hash[@params.map{ |k, v| [k.to_s, v] }]
     end
 
     def response

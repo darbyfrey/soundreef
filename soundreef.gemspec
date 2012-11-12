@@ -15,6 +15,8 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Soundreef::VERSION
 
+  gem.add_dependency('json')
   gem.add_dependency('hashie', '>= 1.0.0')
+  gem.add_dependency('jruby-openssl') if RUBY_PLATFORM == 'java'
   gem.add_development_dependency "rspec"
 end

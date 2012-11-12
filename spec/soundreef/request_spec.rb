@@ -7,10 +7,10 @@ describe "Soundreef::Request" do
 
   before do
     @params = {
-      :song_supplier_id => 345,
-      :song_guid => "4cbc20d4-1167-11e2-b5a9-12313c0866d9",
-      :abc => "DEF",
-      :xyz => "aBc"
+      "song_supplier_id" => 345,
+      "song_guid" => "4cbc20d4-1167-11e2-b5a9-12313c0866d9",
+      "abc" => "DEF",
+      "xyz" => "aBc"
     }
     @endpoint = '/song/list'
   end
@@ -21,7 +21,7 @@ describe "Soundreef::Request" do
       Time.stub_chain(:now, :to_i).and_return(timestamp)
 
       request = Soundreef::Request.new(@endpoint, @params)
-      request.params[:timestamp].should == timestamp
+      request.params["timestamp"].should == timestamp
     end
   end
 
@@ -29,7 +29,7 @@ describe "Soundreef::Request" do
     it "should build the request string correctly" do
       timestamp = 1352659165
       Time.stub_chain(:now, :to_i).and_return(timestamp)
-      compiled_string = @params.merge({:timestamp => timestamp}).sort.map{|p| "#{p.first}#{p.last}"}.join.downcase
+      compiled_string = @params.merge({"timestamp" => timestamp}).sort.map{|p| "#{p.first}#{p.last}"}.join.downcase
 
       request = Soundreef::Request.new(@endpoint, @params)
       request.request_string.should == compiled_string
@@ -97,6 +97,26 @@ describe "Soundreef::Request" do
 
       request = Soundreef::Request.new(@endpoint)
       lambda { request.response }.should raise_error(Exception, "Missing Public Key")
+    end
+  end
+
+  describe "#stringify_param_keys!" do
+    it "should convert param hash keys from symbols to strings" do
+      timestamp = 1352659165
+      Time.stub_chain(:now, :to_i).and_return(timestamp)
+
+      symbol_params = {
+        :song_supplier_id => 345,
+        :song_guid => "4cbc20d4-1167-11e2-b5a9-12313c0866d9",
+        :abc => "DEF",
+        :xyz => "aBc"
+      }
+
+      converted = Hash[symbol_params.map{ |k, v| [k.to_s, v] }]
+
+      request = Soundreef::Request.new(@endpoint, symbol_params)
+      request.stringify_param_keys!
+      request.params.should == converted.merge({"timestamp" => timestamp})
     end
   end
 end
