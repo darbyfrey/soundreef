@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/darbyfrey/soundreef.png)](https://travis-ci.org/darbyfrey/soundreef)
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/darbyfrey/soundreef)
 
 # Soundreef
 
