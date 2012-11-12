@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/darbyfrey/soundreef.png)](https://travis-ci.org/darbyfrey/soundreef)
+
 # Soundreef
 
 A simple ruby interface to the Soundreef API
