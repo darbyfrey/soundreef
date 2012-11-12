@@ -1,6 +1,6 @@
 # Soundreef
 
-A ruby wrapper around the Soundreef API
+A simple ruby interface to the Soundreef API
 
 ## Description
 
@@ -24,14 +24,17 @@ Or install it yourself as:
 
 ### Configuration
 
+For Rails, just put this in an initializer.
+
     Soundreef.configure do |c|
       c.public_key = 'yourpublickey'
       c.private_key = 'yourprivatekey'
     end
 
 ## Endpoints
+Currently, `Songs`, `Batches` and `Earnings` endpoints are supported.
 
-### Songs
+## Songs
 The Songs endpoint provies two interfaces: `list` and `get`.
 
 **List Params**
@@ -67,7 +70,7 @@ The Songs endpoint provies two interfaces: `list` and `get`.
     >> response.keys
     => ["title", "artist", "batch", "created_date", "song_guid", "song_supplier_id", "status"] 
 
-### Batches
+## Batches
 The Batches endpoint provies two interfaces: `list` and `get`.
 
 **List Params**
@@ -79,6 +82,17 @@ The Batches endpoint provies two interfaces: `list` and `get`.
 
 **Examples**
 
+    >> response = Soundreef::Batches.list({:per_page => 25})
+
+    >> response.keys
+    => ["page", "per_page", "pages", "batches"] 
+
+    >> response.batches.count
+    => 19
+
+    >> response.batches.first
+    => #<Hashie::Mash batch_id=583 created_date="2012-11-07 12:39:59" name="fofo" progress=1>
+
 **Get Params**
 
 * **batch_id** (required)
@@ -87,7 +101,7 @@ The Batches endpoint provies two interfaces: `list` and `get`.
 
     ...
 
-### Earnings
+## Earnings
 The Earnings endpoint provies one interface: `get`.
 
 **Get Params**
