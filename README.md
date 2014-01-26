@@ -39,7 +39,7 @@ For Rails, just put this in an initializer.
 Currently, `Songs`, `Batches` and `Earnings` endpoints are supported.
 
 ## Songs
-The Songs endpoint provies two interfaces: `list` and `get`.
+The Songs endpoint provides two interfaces: `list` and `get`.
 
 **List Params**
 
@@ -53,13 +53,13 @@ The Songs endpoint provies two interfaces: `list` and `get`.
     >> response = Soundreef::Songs.list({:page => 2, :per_page => 100})
 
     >> response.keys
-    => ["page", "per_page", "pages", "songs"] 
+    => ["page", "per_page", "pages", "songs"]
 
     >> response.songs.count
     => 100
 
     >> response.songs.first
-    => #<Hashie::Mash artist="SOME ARTIST NAME" batch=547 created_date="2012-10-30 17:54:36" song_guid="de6f5208-22ba-11e2-b5a9-12313c0866d9" song_supplier_id=132013 status=3 title="SOME SONG NAME"> 
+    => #<Hashie::Mash artist="SOME ARTIST NAME" batch=547 created_date="2012-10-30 17:54:36" song_guid="de6f5208-22ba-11e2-b5a9-12313c0866d9" song_supplier_id=132013 status=3 title="SOME SONG NAME">
 
 **Get Params**
 
@@ -69,13 +69,13 @@ The Songs endpoint provies two interfaces: `list` and `get`.
 **Examples**
 
     >> response = Soundreef::Songs.get({:song_guid => 'de6f5208-22ba-11e2-b5a9-12313c0866d9'})
-    => #<Hashie::Mash artist="SOME ARTIST NAME" batch=547 created_date="2012-10-30 17:54:36" song_guid="de6f5208-22ba-11e2-b5a9-12313c0866d9" song_supplier_id=132013 status=3 title="SOME SONG NAME"> 
+    => #<Hashie::Mash artist="SOME ARTIST NAME" batch=547 created_date="2012-10-30 17:54:36" song_guid="de6f5208-22ba-11e2-b5a9-12313c0866d9" song_supplier_id=132013 status=3 title="SOME SONG NAME">
 
     >> response.keys
-    => ["title", "artist", "batch", "created_date", "song_guid", "song_supplier_id", "status"] 
+    => ["title", "artist", "batch", "created_date", "song_guid", "song_supplier_id", "status"]
 
 ## Batches
-The Batches endpoint provies two interfaces: `list` and `get`.
+The Batches endpoint provides two interfaces: `list` and `get`.
 
 **List Params**
 
@@ -89,7 +89,7 @@ The Batches endpoint provies two interfaces: `list` and `get`.
     >> response = Soundreef::Batches.list({:per_page => 25})
 
     >> response.keys
-    => ["page", "per_page", "pages", "batches"] 
+    => ["page", "per_page", "pages", "batches"]
 
     >> response.batches.count
     => 19
@@ -106,7 +106,24 @@ The Batches endpoint provies two interfaces: `list` and `get`.
     ...
 
 ## Earnings
-The Earnings endpoint provies one interface: `get`.
+The Earnings endpoint provides two interfaces: `list` and `get`.
+
+**List Params**
+
+* **song_guid** (optional)
+* **year** (required)
+* **semester** (required)
+* **page** (optional)
+
+**Examples**
+
+    >> response = Soundreef::Earnings.list({:page => 2, :per_page => 100})
+
+    >> response.keys
+    => ["page", "per_page", "pages", "songs"]
+
+    >> response.songs.count
+    => 100
 
 **Get Params**
 
